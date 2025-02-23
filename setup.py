@@ -19,6 +19,7 @@ setup(
     packages=find_packages(include=["fast_grpc", "fast_grpc.*"]),
     python_requires=">=3.9",
     install_requires=[
+        "APScheduler>=3.11.0",
         "protobuf>=5.29.3",
         "grpcio>=1.70.0",
         "grpcio-tools>=1.68.1",
