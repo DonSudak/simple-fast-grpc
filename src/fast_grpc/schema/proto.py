@@ -1,7 +1,8 @@
 import datetime
 from enum import IntEnum
 from pathlib import Path
-from typing import Sequence, Any
+from types import UnionType
+from typing import Sequence, Any, Union
 
 import grpc
 from google.protobuf.descriptor import (
@@ -50,6 +51,8 @@ _base_types: dict[type, str] = {
     Int32: "int32",
     Int64: "int64",
     Double: "double",
+    Union: "oneof",
+    UnionType: "oneof",
 }
 """Mapping of Python types to their corresponding proto base types."""
 
@@ -380,6 +383,17 @@ class ProtoBuilder:
             if not issubclass(type_, tuple(_base_types)):
                 raise ValueError(f"Unsupported type: {type_}")
             return _base_types[type_]
+
+        elif origin in (Union, UnionType) and type(None) in args:
+            if issubclass(args[0], BaseModel):
+                message = self.convert_message(args[0])
+                return message.name
+            if issubclass(args[0], IntEnum):
+                struct = self.convert_enum(args[0])
+                return struct.name
+            if not issubclass(args[0], tuple(_base_types)):
+                raise ValueError(f"Unsupported type: {type_}")
+            return _base_types[args[0]]
         else:
             if issubclass(origin, Sequence):
                 return f"repeated {self._get_type_name(args[0])}"
