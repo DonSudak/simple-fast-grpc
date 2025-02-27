@@ -51,8 +51,6 @@ _base_types: dict[type, str] = {
     Int32: "int32",
     Int64: "int64",
     Double: "double",
-    Union: "oneof",
-    UnionType: "oneof",
 }
 """Mapping of Python types to their corresponding proto base types."""
 
