@@ -9,14 +9,15 @@ except FileNotFoundError:
     long_description = ""
 
 setup(
-    name="python-simple-fast-grpc",
+    name="simple-fast-grpc",
     version="0.0.1",
     description="Fast to Code gRPC in Python with FastAPI generator for testing your code. Fork of FastGRPC with dependency injection, middlewares and handling exception",
     long_description=long_description,
     long_description_content_type="text/markdown",
     author="Leraner",
     author_email="legend.tony@yandex.ru",
-    packages=find_packages(include=["fast_grpc", "fast_grpc.*"]),
+    packages=find_packages(where="src"),
+    package_dir={"": "src"},
     python_requires=">=3.9",
     install_requires=[
         "APScheduler>=3.11.0",
