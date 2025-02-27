@@ -16,7 +16,9 @@ setup(
     long_description_content_type="text/markdown",
     author="Leraner",
     author_email="legend.tony@yandex.ru",
-    packages=find_packages(include=["fast_grpc", "fast_grpc.*"]),
+    # packages=find_packages(include=["fast_grpc", "fast_grpc.*"]),
+    packages=find_packages(where="fast_grpc"),
+    package_dir={"": "fast_grpc"},
     python_requires=">=3.9",
     install_requires=[
         "APScheduler>=3.11.0",
